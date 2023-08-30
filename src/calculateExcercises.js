@@ -1,41 +1,42 @@
-var calculateExcercises = function (days, targetHoursPerDay) {
-    var periodLength = days.length;
-    var trainingDays = countTrainingDays(days);
-    var success = checkSuccess(days, targetHoursPerDay);
-    var _a = calculateRating(days, targetHoursPerDay), rating = _a.rating, ratingDescription = _a.ratingDescription;
-    var target = targetHoursPerDay;
-    var average = calculateAverage(days);
+"use strict";
+const calculateExcercises = (days, targetHoursPerDay) => {
+    const periodLength = days.length;
+    const trainingDays = countTrainingDays(days);
+    const success = checkSuccess(days, targetHoursPerDay);
+    const { rating, ratingDescription } = calculateRating(days, targetHoursPerDay);
+    const target = targetHoursPerDay;
+    const average = calculateAverage(days);
     return {
-        periodLength: periodLength,
-        trainingDays: trainingDays,
-        success: success,
-        rating: rating,
-        ratingDescription: ratingDescription,
-        target: target,
-        average: average
+        periodLength,
+        trainingDays,
+        success,
+        rating,
+        ratingDescription,
+        target,
+        average
     };
 };
-var countTrainingDays = function (days) {
-    var sum = 0;
-    days.forEach(function (day) {
+const countTrainingDays = (days) => {
+    let sum = 0;
+    days.forEach(day => {
         if (day !== 0) {
             sum++;
         }
     });
     return sum;
 };
-var checkSuccess = function (days, targetHoursPerDay) {
-    var average = calculateAverage(days);
+const checkSuccess = (days, targetHoursPerDay) => {
+    const average = calculateAverage(days);
     return (average >= targetHoursPerDay) ? true : false;
 };
-var calculateAverage = function (days) {
-    var sum = 0;
-    days.forEach(function (day) { return sum += day; });
+const calculateAverage = (days) => {
+    let sum = 0;
+    days.forEach(day => sum += day);
     return sum / days.length;
 };
-var calculateRating = function (days, targetHoursPerDay) {
-    var average = calculateAverage(days);
-    var ratingScore = average / targetHoursPerDay;
+const calculateRating = (days, targetHoursPerDay) => {
+    const average = calculateAverage(days);
+    const ratingScore = average / targetHoursPerDay;
     if (ratingScore > 1.0) {
         // did more than required
         return { rating: 3, ratingDescription: "You overdid yourself" };
@@ -49,16 +50,16 @@ var calculateRating = function (days, targetHoursPerDay) {
         return { rating: 1, ratingDescription: "Next time..." };
     }
 };
-var parseArgsExcercises = function () {
-    var targetValue = process.argv[2];
-    var daysValue = process.argv.splice(3, process.argv.length);
+const parseArgsExcercises = () => {
+    const targetValue = process.argv[2];
+    const daysValue = process.argv.splice(3, process.argv.length);
     console.log(targetValue, daysValue);
     try {
         if (!targetValue || !daysValue) {
             throw Error("No values given");
         }
-        var target = parseInt(targetValue);
-        var days = daysValue.map(function (day) {
+        const target = parseInt(targetValue);
+        const days = daysValue.map(day => {
             return parseInt(day);
         });
         return [target, days];
@@ -68,5 +69,5 @@ var parseArgsExcercises = function () {
         return [2, [3, 0, 2, 4.5, 0, 3, 1]];
     }
 };
-var args = parseArgsExcercises();
+const args = parseArgsExcercises();
 console.log(calculateExcercises(args[1], args[0]));

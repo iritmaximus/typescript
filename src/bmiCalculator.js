@@ -1,6 +1,7 @@
-var calculateBmi = function (values) {
-    var bmi = values.weigth / (Math.pow((values.heigth / 100), 2));
-    var category;
+"use strict";
+const calculateBmi = (values) => {
+    const bmi = values.weigth / ((values.heigth / 100) ** 2);
+    let category;
     if (bmi < 18.4) {
         category = "Underweight (unhealty weight)";
     }
@@ -12,9 +13,9 @@ var calculateBmi = function (values) {
     }
     return category;
 };
-var parseArgs = function () {
-    var heigth = process.argv[2];
-    var weigth = process.argv[3];
+const parseArgs = () => {
+    const heigth = process.argv[2];
+    const weigth = process.argv[3];
     try {
         if (!heigth || !weigth) {
             throw Error("No values given");
