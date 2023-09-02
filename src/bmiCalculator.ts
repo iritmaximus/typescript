@@ -1,35 +1,34 @@
-type bmiValues = { heigth: number, weigth: number }
+export type bmiValues = { height: number, weight: number };
 
-const calculateBmi = (values: bmiValues): String => {
-    const bmi: number = values.weigth / ((values.heigth / 100) ** 2);
+export const calculateBmi = (values: bmiValues): string => {
+    const bmi: number = values.weight / ((values.height / 100) ** 2);
 
-    let category: String;
+    let category: string;
     if (bmi < 18.4) {
         category = "Underweight (unhealty weight)";
     } else if (bmi >= 18.5 && bmi < 24.9 ) {
         category = "Normal (healthy weight)";
-    } else if ( bmi > 25) {
+    } else {
         category = "Overweight (unhealty weight)";
     }
 
     return category;
-}
+};
 
 
 const parseArgs = (): bmiValues => {
-    const heigth = process.argv[2];
-    const weigth = process.argv[3];
+    const height = process.argv[2];
+    const weight = process.argv[3];
 
     try {
-        if (!heigth || !weigth) {
-            throw Error("No values given")
+        if (!height || !weight) {
+            throw Error("No values given");
         }
-        return { heigth: parseInt(heigth), weigth: parseInt(weigth) };
+        return { height: parseInt(height), weight: parseInt(weight) };
     } catch (e) {
         console.warn("No values given, defaulting to the given ones");
-        return { heigth: 180, weigth: 74 };
+        return { height: 180, weight: 74 };
     }
-
-}
+};
 
 console.log(calculateBmi(parseArgs()));
